@@ -1,0 +1,8 @@
+{
+  "name": "creekstone-roof-co",
+  "version": "1.0.0",
+  "description": "Creekstone Roof Co — Austin, TX roofing company website",
+  "scripts": {
+    "start": "npx serve -s . -l $PORT"
+  }
+}
