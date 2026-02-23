@@ -62,9 +62,14 @@
     }
     .contact-info-card {
       background: var(--color-white);
-      padding: var(--space-2xl);
+      padding: var(--space-lg);
       border-radius: var(--border-radius-lg);
       border: 1px solid oklch(0.90 0.01 70);
+    }
+    @media (min-width: 640px) {
+      .contact-info-card {
+        padding: var(--space-2xl);
+      }
     }
     .contact-info-item {
       display: flex;
@@ -94,9 +99,16 @@
     }
     .form-card {
       background: var(--color-white);
-      padding: var(--space-2xl);
+      padding: var(--space-lg);
       border-radius: var(--border-radius-lg);
       border: 1px solid oklch(0.90 0.01 70);
+      min-width: 0;
+      overflow: hidden;
+    }
+    @media (min-width: 640px) {
+      .form-card {
+        padding: var(--space-2xl);
+      }
     }
     .form-row {
       display: grid;
