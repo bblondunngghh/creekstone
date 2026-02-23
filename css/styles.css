@@ -252,6 +252,7 @@ address {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: var(--space-sm);
   padding-block: var(--space-sm);
   max-width: var(--container-wide);
   margin-inline: auto;
@@ -262,22 +263,41 @@ address {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
+  min-width: 0;
+  flex-shrink: 1;
 }
 
 .site-header__logo img,
 .site-header__logo svg {
-  height: 52px;
+  height: 40px;
   width: auto;
+  flex-shrink: 0;
+}
+
+@media (min-width: 960px) {
+  .site-header__logo img,
+  .site-header__logo svg {
+    height: 52px;
+  }
 }
 
 .site-header__logo-text {
   font-family: var(--font-heading);
-  font-size: var(--text-lg);
+  font-size: var(--text-base);
   color: var(--color-primary);
   font-weight: 700;
   letter-spacing: 0.05em;
   line-height: 1.1;
   text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (min-width: 640px) {
+  .site-header__logo-text {
+    font-size: var(--text-lg);
+  }
 }
 
 .site-header__logo-text span {
@@ -346,6 +366,7 @@ address {
   border: none;
   cursor: pointer;
   color: var(--color-primary);
+  flex-shrink: 0;
 }
 
 .mobile-nav-toggle svg {
