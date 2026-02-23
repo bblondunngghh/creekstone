@@ -12,7 +12,11 @@
     pitch: 0.75,   // default: Standard
     stories: 1,    // default: 1
     service: null,
-    material: null
+    material: null,
+    solarData: null,    // Google Solar API data
+    roofAreaSqFt: null, // actual roof area from Solar API
+    lat: null,
+    lng: null
   };
 
   // ---- Pricing Constants ----
@@ -120,9 +124,140 @@
         addressInput.value = place.formatted_address;
         var nextBtn = document.querySelector('#step-1 .quote-next');
         if (nextBtn) nextBtn.disabled = false;
+
+        // Capture lat/lng for Solar API
+        if (place.geometry && place.geometry.location) {
+          state.lat = place.geometry.location.lat();
+          state.lng = place.geometry.location.lng();
+          fetchSolarData(state.lat, state.lng);
+        }
       }
     });
   };
+
+  // ---- Google Solar API ----
+  function fetchSolarData(lat, lng) {
+    // Extract API key from the Google Maps script tag
+    var mapsScript = document.querySelector('script[src*="maps.googleapis.com"]');
+    if (!mapsScript) return;
+    var keyMatch = mapsScript.src.match(/key=([^&]+)/);
+    if (!keyMatch || keyMatch[1] === 'YOUR_API_KEY') return;
+    var apiKey = keyMatch[1];
+
+    var url = 'https://solar.googleapis.com/v1/buildingInsights:findClosest' +
+      '?location.latitude=' + lat +
+      '&location.longitude=' + lng +
+      '&requiredQuality=HIGH' +
+      '&key=' + apiKey;
+
+    // Show loading indicator on step 1
+    showSolarStatus('loading');
+
+    fetch(url)
+      .then(function (res) {
+        if (!res.ok) throw new Error('Solar API error: ' + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        if (data && data.solarPotential && data.solarPotential.roofSegmentStats) {
+          processSolarData(data);
+        } else {
+          showSolarStatus('none');
+        }
+      })
+      .catch(function () {
+        showSolarStatus('none');
+      });
+  }
+
+  function processSolarData(data) {
+    var segments = data.solarPotential.roofSegmentStats;
+
+    // Sum total roof area (sq meters → sq ft)
+    var totalAreaM2 = 0;
+    var weightedPitch = 0;
+    segments.forEach(function (seg) {
+      totalAreaM2 += seg.areaMeters2;
+      weightedPitch += seg.pitchDegrees * seg.areaMeters2;
+    });
+    var avgPitchDeg = weightedPitch / totalAreaM2;
+    var totalAreaSqFt = Math.round(totalAreaM2 * 10.7639);
+
+    // Store solar data
+    state.solarData = data;
+    state.roofAreaSqFt = totalAreaSqFt;
+
+    // Map pitch degrees to our multiplier categories
+    // Flat: 0-10°, Low: 10-20°, Standard: 20-35°, Steep: 35°+
+    var pitchValue;
+    if (avgPitchDeg < 10) pitchValue = '0.55';
+    else if (avgPitchDeg < 20) pitchValue = '0.65';
+    else if (avgPitchDeg < 35) pitchValue = '0.75';
+    else pitchValue = '0.90';
+
+    // Estimate home sqft from roof area (reverse of pitch multiplier)
+    var pitchMult = parseFloat(pitchValue);
+    var estHomeSqFt = Math.round(totalAreaSqFt / pitchMult);
+
+    // Find closest sqft option
+    var sqftOptions = [800, 1250, 1750, 2250, 2750, 3500];
+    var closestSqft = sqftOptions[0];
+    var minDiff = Math.abs(estHomeSqFt - sqftOptions[0]);
+    sqftOptions.forEach(function (opt) {
+      var diff = Math.abs(estHomeSqFt - opt);
+      if (diff < minDiff) { minDiff = diff; closestSqft = opt; }
+    });
+
+    // Pre-select size option in step 2
+    var sizeContainer = document.getElementById('size-options');
+    if (sizeContainer) {
+      sizeContainer.querySelectorAll('.quote-option').forEach(function (btn) {
+        btn.classList.remove('is-selected');
+        if (btn.dataset.value === String(closestSqft)) {
+          btn.classList.add('is-selected');
+        }
+      });
+      state.sqft = String(closestSqft);
+      var nextBtn = document.querySelector('#step-2 .quote-next');
+      if (nextBtn) nextBtn.disabled = false;
+    }
+
+    // Pre-select pitch option in step 3
+    var pitchContainer = document.getElementById('pitch-options');
+    if (pitchContainer) {
+      pitchContainer.querySelectorAll('.quote-option').forEach(function (btn) {
+        btn.classList.remove('is-selected');
+        if (btn.dataset.value === pitchValue) {
+          btn.classList.add('is-selected');
+        }
+      });
+      state.pitch = pitchValue;
+    }
+
+    showSolarStatus('success', totalAreaSqFt, Math.round(avgPitchDeg));
+  }
+
+  function showSolarStatus(status, roofSqFt, pitchDeg) {
+    var existing = document.getElementById('solar-status');
+    if (existing) existing.remove();
+
+    if (status === 'none') return;
+
+    var el = document.createElement('div');
+    el.id = 'solar-status';
+    el.className = 'solar-status solar-status--' + status;
+
+    if (status === 'loading') {
+      el.innerHTML = '<span class="solar-status__icon">&#128752;</span> Analyzing roof from satellite imagery…';
+    } else if (status === 'success') {
+      el.innerHTML = '<span class="solar-status__icon">&#9989;</span> Satellite data detected: <strong>~' +
+        roofSqFt.toLocaleString() + ' sq ft</strong> roof area &middot; <strong>' + pitchDeg + '°</strong> avg pitch' +
+        '<br><small>Size &amp; pitch have been auto-filled. You can still adjust manually.</small>';
+    }
+
+    var step1Body = document.querySelector('#step-1 .quote-step__body');
+    if (step1Body) step1Body.appendChild(el);
+  }
 
   // ---- Navigation Buttons ----
   calculator.addEventListener('click', function (e) {
@@ -172,20 +307,24 @@
       return;
     }
 
+    // Use actual roof area from Solar API if available, otherwise estimate from sqft × pitch
+    var useSolar = state.roofAreaSqFt && state.solarData;
+    var roofArea = useSolar ? state.roofAreaSqFt : sqft * pitch;
+    var sourceLabel = useSolar ? ' <span class="solar-badge">Satellite Data</span>' : '';
+
     // Replacement calculation
     if (!materialCost) {
       // "Not sure" — show range across all materials
-      var roofArea = sqft * pitch;
       var lowCost = roofArea * 4.50 * 0.85;
       var highCost = roofArea * 12.00 * 1.15;
       resultLow.textContent = formatCurrency(lowCost);
       resultHigh.textContent = formatCurrency(highCost);
-      resultDetails.innerHTML = '<p><strong>' + sqft.toLocaleString() + ' sq ft home</strong> &middot; ' + pitchLabel + ' pitch</p>' +
+      resultDetails.innerHTML = '<p><strong>' + sqft.toLocaleString() + ' sq ft home</strong> &middot; ' + pitchLabel + ' pitch' + sourceLabel + '</p>' +
+        '<p>Roof area: ~' + Math.round(roofArea).toLocaleString() + ' sq ft</p>' +
         '<p>Range includes asphalt shingles through premium tile. We\'ll help you choose the best material for your budget and needs during your free inspection.</p>';
       return;
     }
 
-    var roofArea = sqft * pitch;
     var baseCost = roofArea * materialCost;
     var low = baseCost * 0.85;
     var high = baseCost * 1.15;
@@ -196,7 +335,7 @@
 
     resultLow.textContent = formatCurrency(low);
     resultHigh.textContent = formatCurrency(high);
-    resultDetails.innerHTML = '<p><strong>' + sqft.toLocaleString() + ' sq ft home</strong> &middot; ' + pitchLabel + ' pitch &middot; ' + materialLabel + '</p>' +
+    resultDetails.innerHTML = '<p><strong>' + sqft.toLocaleString() + ' sq ft home</strong> &middot; ' + pitchLabel + ' pitch &middot; ' + materialLabel + sourceLabel + '</p>' +
       '<p>Roof area: ~' + Math.round(roofArea).toLocaleString() + ' sq ft &middot; Material: $' + materialCost.toFixed(2) + '/sq ft</p>';
   }
 

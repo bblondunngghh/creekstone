@@ -1462,6 +1462,49 @@ lord-icon {
   color: var(--color-text-muted);
 }
 
+/* Solar API Status */
+.solar-status {
+  margin-top: var(--space-lg);
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--border-radius);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.solar-status--loading {
+  background: oklch(0.95 0.02 220);
+  color: oklch(0.40 0.05 220);
+  border: 1px solid oklch(0.85 0.04 220);
+}
+
+.solar-status--success {
+  background: oklch(0.95 0.04 160);
+  color: oklch(0.35 0.08 160);
+  border: 1px solid oklch(0.85 0.06 160);
+}
+
+.solar-status__icon {
+  margin-right: var(--space-xs);
+}
+
+.solar-status small {
+  display: block;
+  margin-top: var(--space-xs);
+  opacity: 0.75;
+}
+
+.solar-badge {
+  display: inline-block;
+  background: oklch(0.45 0.12 160);
+  color: #fff;
+  font-size: var(--text-xs);
+  padding: 0.1em 0.6em;
+  border-radius: 999px;
+  font-weight: 600;
+  vertical-align: middle;
+  margin-left: var(--space-xs);
+}
+
 /* Disabled next button */
 .quote-next:disabled {
   opacity: 0.4;
