@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:claude.ai)",
+      "WebSearch",
+      "WebFetch(domain:www.austinlonghornroofing.com)",
+      "WebFetch(domain:transcendentroofing.com)",
+      "WebFetch(domain:www.goodnewsroofing.com)",
+      "WebFetch(domain:backlinko.com)",
+      "Bash(cd:*)",
+      "WebFetch(domain:lordicon.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:codepen.io)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:jsfiddle.net)",
+      "WebFetch(domain:www.elegantthemes.com)",
+      "Bash(curl:*)"
+    ]
+  }
+}

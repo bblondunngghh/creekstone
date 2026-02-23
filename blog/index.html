@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roofing Blog | Austin TX Tips &amp; Guides | Creekstone Roof Co</title>
+  <meta name="description" content="Expert roofing tips, guides, and industry news for Austin, TX homeowners. Learn about roof maintenance, storm damage, material options, insurance claims, and more from Creekstone Roof Co.">
+  <meta name="keywords" content="roofing blog Austin TX, roof maintenance tips, storm damage guide Austin, roofing materials guide, Texas roof insurance claims">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.creekstoneroofco.com/blog/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Roofing Blog | Austin TX | Creekstone Roof Co">
+  <meta property="og:description" content="Expert roofing tips, guides, and news for Austin homeowners. Storm damage, materials, insurance claims, and more.">
+  <meta property="og:url" content="https://www.creekstoneroofco.com/blog/">
+  <meta property="og:site_name" content="Creekstone Roof Co">
+
+  <meta name="geo.region" content="US-TX">
+  <meta name="geo.placename" content="Austin">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="preload" href="/css/styles.css" as="style">
+  <link rel="stylesheet" href="/css/styles.css">
+  <script src="https://cdn.lordicon.com/lordicon.js"></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "Creekstone Roof Co Blog",
+    "description": "Expert roofing tips, guides, and news for Austin, TX homeowners.",
+    "url": "https://www.creekstoneroofco.com/blog/",
+    "publisher": {
+      "@id": "https://www.creekstoneroofco.com/#organization"
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.creekstoneroofco.com/"},
+      {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.creekstoneroofco.com/blog/"}
+    ]
+  }
+  </script>
+
+  <style>
+    .blog-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+    @media (min-width: 640px) {
+      .blog-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 960px) {
+      .blog-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .blog-card {
+      background: var(--color-white);
+      border-radius: var(--border-radius-lg);
+      border: 1px solid oklch(0.90 0.01 70);
+      overflow: hidden;
+      transition: all var(--transition-base);
+      display: flex;
+      flex-direction: column;
+    }
+    .blog-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    .blog-card__image {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .blog-card__image svg {
+      width: 40px;
+      height: 40px;
+      opacity: 0.4;
+    }
+    .blog-card__image--teal { background: linear-gradient(135deg, oklch(0.85 0.05 175), oklch(0.75 0.08 175)); color: var(--color-teal); }
+    .blog-card__image--accent { background: linear-gradient(135deg, oklch(0.92 0.04 55), oklch(0.82 0.08 55)); color: var(--color-accent); }
+    .blog-card__image--stone { background: linear-gradient(135deg, var(--color-stone-lighter), oklch(0.78 0.04 70)); color: var(--color-stone); }
+    .blog-card__image--primary { background: linear-gradient(135deg, oklch(0.35 0.02 230), oklch(0.27 0.02 230)); color: oklch(0.55 0.02 230); }
+    .blog-card__body {
+      padding: var(--space-lg);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .blog-card__date {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: var(--space-xs);
+    }
+    .blog-card__title {
+      font-family: var(--font-heading);
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: var(--space-sm);
+      line-height: 1.3;
+    }
+    .blog-card__excerpt {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-md);
+      flex: 1;
+    }
+    .blog-card__read-more {
+      font-size: var(--text-sm);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-accent);
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- HEADER -->
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo" aria-label="Creekstone Roof Co - Home">
+        <img src="/remixed-79905f81.svg" alt="Creekstone Roof Co logo" width="52" height="52">
+        <div class="site-header__logo-text">Creekstone<span>Roof Co</span></div>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <ul class="main-nav__list">
+          <li><a href="/services/" class="main-nav__link">Services</a></li>
+          <li><a href="/about/" class="main-nav__link">About</a></li>
+          <li><a href="/areas/" class="main-nav__link">Service Areas</a></li>
+          <li><a href="/gallery/" class="main-nav__link">Our Work</a></li>
+          <li><a href="/blog/" class="main-nav__link">Blog</a></li>
+          <li><a href="/contact/" class="main-nav__link">Contact</a></li>
+        </ul>
+      </nav>
+      <a href="/quote/" class="btn btn--primary header-cta">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+        Instant Quote
+      </a>
+      <button class="mobile-nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-nav" id="mobile-nav" role="dialog" aria-label="Mobile navigation" aria-hidden="true">
+    <button class="mobile-nav__close" aria-label="Close menu">&times;</button>
+    <ul class="mobile-nav__list">
+      <li><a href="/services/" class="mobile-nav__link">Services</a></li>
+      <li><a href="/about/" class="mobile-nav__link">About</a></li>
+      <li><a href="/areas/" class="mobile-nav__link">Service Areas</a></li>
+      <li><a href="/gallery/" class="mobile-nav__link">Our Work</a></li>
+      <li><a href="/blog/" class="mobile-nav__link">Blog</a></li>
+      <li><a href="/contact/" class="mobile-nav__link">Contact</a></li>
+    </ul>
+    <a href="/quote/" class="btn btn--primary btn--lg" style="margin-top: auto;">Get Instant Quote</a>
+  </div>
+
+  <main id="main-content">
+
+    <nav class="breadcrumbs container" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/">Home</a></li>
+        <li aria-current="page">Blog</li>
+      </ol>
+    </nav>
+
+    <section class="page-hero">
+      <div class="container">
+        <h1>Roofing Blog</h1>
+        <p>Expert tips, guides, and industry insights for Austin homeowners. Stay informed about roof maintenance, storm damage, material options, and how to protect your biggest investment.</p>
+      </div>
+    </section>
+
+    <!-- BLOG POSTS -->
+    <section class="section" aria-labelledby="blog-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-header__label">Latest Articles</span>
+          <h2 id="blog-heading">Roofing Tips &amp; Guides for Austin Homeowners</h2>
+        </div>
+
+        <div class="blog-grid">
+          <article class="blog-card">
+            <div class="blog-card__image blog-card__image--teal">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.66 7.93L12 2.27 6.34 7.93c-3.12 3.12-3.12 8.19 0 11.31A7.98 7.98 0 0012 21.58c2.05 0 4.1-.78 5.66-2.34 3.12-3.12 3.12-8.19 0-11.31zM12 19.59c-1.6 0-3.11-.62-4.24-1.76C6.62 16.69 6 15.19 6 13.59s.62-3.11 1.76-4.24L12 5.1v14.49z"/></svg>
+            </div>
+            <div class="blog-card__body">
+              <span class="blog-card__date">February 2026</span>
+              <h3 class="blog-card__title">How to Check Your Roof for Hail Damage After an Austin Storm</h3>
+              <p class="blog-card__excerpt">Austin's hail season can cause serious roof damage that isn't always visible from the ground. Here's what to look for and when to call a professional.</p>
+              <span class="blog-card__read-more">Read Article →</span>
+            </div>
+          </article>
+
+          <article class="blog-card">
+            <div class="blog-card__image blog-card__image--accent">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            </div>
+            <div class="blog-card__body">
+              <span class="blog-card__date">February 2026</span>
+              <h3 class="blog-card__title">Asphalt Shingles vs. Metal Roofing: Which is Right for Austin Homes?</h3>
+              <p class="blog-card__excerpt">A detailed comparison of the two most popular roofing materials in Central Texas — cost, durability, energy efficiency, and insurance impact.</p>
+              <span class="blog-card__read-more">Read Article →</span>
+            </div>
+          </article>
+
+          <article class="blog-card">
+            <div class="blog-card__image blog-card__image--stone">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+            </div>
+            <div class="blog-card__body">
+              <span class="blog-card__date">January 2026</span>
+              <h3 class="blog-card__title">Filing a Roof Insurance Claim in Texas: A Complete Homeowner's Guide</h3>
+              <p class="blog-card__excerpt">Step-by-step guide to filing a successful roof insurance claim in Texas. What to document, when to file, and how to work with your adjuster.</p>
+              <span class="blog-card__read-more">Read Article →</span>
+            </div>
+          </article>
+
+          <article class="blog-card">
+            <div class="blog-card__image blog-card__image--primary">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+            </div>
+            <div class="blog-card__body">
+              <span class="blog-card__date">January 2026</span>
+              <h3 class="blog-card__title">How Long Does a Roof Last in Texas? Lifespan by Material Type</h3>
+              <p class="blog-card__excerpt">Texas heat, hail, and UV exposure shorten roof lifespans compared to milder climates. Here's what to realistically expect from each material.</p>
+              <span class="blog-card__read-more">Read Article →</span>
+            </div>
+          </article>
+
+          <article class="blog-card">
+            <div class="blog-card__image blog-card__image--teal">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+            </div>
+            <div class="blog-card__body">
+              <span class="blog-card__date">December 2025</span>
+              <h3 class="blog-card__title">5 Red Flags When Hiring a Roofing Contractor in Austin</h3>
+              <p class="blog-card__excerpt">Storm chasers, high-pressure sales, and missing paperwork — learn how to spot unreliable roofers and protect yourself from common scams.</p>
+              <span class="blog-card__read-more">Read Article →</span>
+            </div>
+          </article>
+
+          <article class="blog-card">
+            <div class="blog-card__image blog-card__image--accent">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></svg>
+            </div>
+            <div class="blog-card__body">
+              <span class="blog-card__date">December 2025</span>
+              <h3 class="blog-card__title">Roof Maintenance Checklist: Seasonal Tips for Central Texas</h3>
+              <p class="blog-card__excerpt">A seasonal maintenance schedule to extend your roof's lifespan. What to check in spring, summer, fall, and winter in the Austin climate.</p>
+              <span class="blog-card__read-more">Read Article →</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="text-center" style="margin-top: var(--space-3xl);">
+          <p style="color: var(--color-text-muted); font-size: var(--text-sm); margin-inline: auto;">More articles coming soon. Have a roofing question? <a href="/contact/">Contact us</a> and we'll give you an honest answer.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-banner" aria-label="Get a free estimate">
+      <div class="container text-center">
+        <h2>Have a Roofing Question?</h2>
+        <p>Our team is happy to answer any roofing questions — no sales pitch, just honest advice from local experts.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: var(--space-md); justify-content: center;">
+          <a href="/contact/" class="btn btn--dark btn--lg">Ask a Question</a>
+          <a href="/quote/" class="btn btn--lg" style="background: transparent; border-color: var(--color-white); color: var(--color-white);">Get Instant Quote</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="/remixed-79905f81.svg" alt="Creekstone Roof Co" width="160" height="80" loading="lazy" style="margin-bottom: var(--space-lg);">
+          <p>Creekstone Roof Co is a licensed and insured roofing contractor serving Austin, TX and Central Texas.</p>
+        </div>
+        <div>
+          <h4>Services</h4>
+          <ul class="footer-links">
+            <li><a href="/services/roof-replacement/">Roof Replacement</a></li>
+            <li><a href="/services/roof-repair/">Roof Repair</a></li>
+            <li><a href="/services/storm-damage/">Storm Damage</a></li>
+            <li><a href="/services/roof-inspection/">Roof Inspection</a></li>
+            <li><a href="/services/commercial-roofing/">Commercial Roofing</a></li>
+            <li><a href="/services/gutters/">Gutters &amp; Drainage</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Service Areas</h4>
+          <ul class="footer-links">
+            <li><a href="/areas/austin/">Austin</a></li>
+            <li><a href="/areas/round-rock/">Round Rock</a></li>
+            <li><a href="/areas/cedar-park/">Cedar Park</a></li>
+            <li><a href="/areas/georgetown/">Georgetown</a></li>
+            <li><a href="/areas/pflugerville/">Pflugerville</a></li>
+            <li><a href="/areas/leander/">Leander</a></li>
+            <li><a href="/areas/lakeway/">Lakeway</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <address>
+            <div class="footer-contact-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.25 1.01l-2.2 2.2z"/></svg>
+              <a href="tel:+15125550123" class="phone-link" style="font-size: var(--text-sm);">(512) 555-0123</a>
+            </div>
+            <div class="footer-contact-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+              <a href="mailto:info@creekstoneroofco.com">info@creekstoneroofco.com</a>
+            </div>
+            <div class="footer-contact-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+              <span>Austin, TX</span>
+            </div>
+            <div class="footer-contact-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+              <span>Mon–Fri 7am–6pm, Sat 8am–2pm</span>
+            </div>
+          </address>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="year">2026</span> Creekstone Roof Co. All rights reserved. Licensed &amp; insured roofing contractor in Austin, TX.</p>
+        <div>
+          <a href="/privacy/">Privacy Policy</a> &middot;
+          <a href="/terms/">Terms of Service</a> &middot;
+          <a href="/sitemap.xml">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script defer src="/js/main.js"></script>
+</body>
+</html>
