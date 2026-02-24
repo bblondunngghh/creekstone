@@ -1,4 +1,4 @@
-# Creekstone Roof Co — robots.txt
+# Waterloo Roofing Co — robots.txt
 # AI-crawler friendly: We welcome indexing by search engines and AI assistants.
 
 User-agent: *
@@ -29,4 +29,4 @@ User-agent: Bytespider
 Allow: /
 
 # Sitemap
-Sitemap: https://www.creekstoneroofco.com/sitemap.xml
+Sitemap: https://www.waterlooroofingco.com/sitemap.xml

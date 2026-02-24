@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Free Instant Roof Quote | Austin TX | Creekstone Roof Co</title>
+  <title>Free Instant Roof Quote | Austin TX | Waterloo Roofing Co</title>
   <meta name="description" content="Get an instant roof replacement estimate for your Austin, TX home. Enter your details and see your price range in under 60 seconds. No obligation, no pressure.">
   <meta name="keywords" content="roof quote Austin TX, roof estimate Austin, roofing cost calculator, instant roof quote, roof replacement cost Austin">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.creekstoneroofco.com/quote/">
+  <link rel="canonical" href="https://www.waterlooroofingco.com/quote/">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Free Instant Roof Quote | Creekstone Roof Co">
+  <meta property="og:title" content="Free Instant Roof Quote | Waterloo Roofing Co">
   <meta property="og:description" content="Get an instant roof replacement estimate for your Austin home. See your price range in under 60 seconds.">
-  <meta property="og:url" content="https://www.creekstoneroofco.com/quote/">
-  <meta property="og:site_name" content="Creekstone Roof Co">
+  <meta property="og:url" content="https://www.waterlooroofingco.com/quote/">
+  <meta property="og:site_name" content="Waterloo Roofing Co">
 
   <meta name="geo.region" content="US-TX">
   <meta name="geo.placename" content="Austin">
@@ -32,18 +32,21 @@
   {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "Free Instant Roof Quote | Creekstone Roof Co",
+    "name": "Free Instant Roof Quote | Waterloo Roofing Co",
     "description": "Get an instant roof replacement estimate for your Austin, TX home.",
-    "url": "https://www.creekstoneroofco.com/quote/",
+    "url": "https://www.waterlooroofingco.com/quote/",
     "publisher": {
       "@type": "RoofingContractor",
-      "@id": "https://www.creekstoneroofco.com/#organization"
+      "@id": "https://www.waterlooroofingco.com/#organization"
     }
   }
   </script>
 
-  <!-- Google Places API (replace YOUR_API_KEY with actual key) -->
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initAutocomplete"></script>
+  <!-- Mapbox GL JS -->
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+  <!-- Turf.js for area calculation -->
+  <script src="https://cdn.jsdelivr.net/npm/@turf/turf@7/turf.min.js"></script>
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -51,11 +54,11 @@
   <!-- ============ HEADER ============ -->
   <header class="site-header" role="banner">
     <div class="site-header__inner">
-      <a href="/" class="site-header__logo" aria-label="Creekstone Roof Co - Home">
-        <img src="/remixed-79905f81.svg" alt="Creekstone Roof Co logo" width="52" height="52">
+      <a href="/" class="site-header__logo" aria-label="Waterloo Roofing Co - Home">
+        <img src="/remixed-79905f81.svg" alt="Waterloo Roofing Co logo" width="52" height="52">
         <div class="site-header__logo-text">
-          Creekstone
-          <span>Roof Co</span>
+          Waterloo
+          <span>Roofing Co</span>
         </div>
       </a>
 
@@ -116,33 +119,81 @@
     <section class="section" aria-labelledby="quote-heading">
       <div class="container container--narrow">
 
-        <!-- Progress Bar -->
-        <div class="quote-progress" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="5" aria-label="Quote progress">
+        <!-- Progress Bar (3-step flow; 4 if fallback manual size shown) -->
+        <div class="quote-progress" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="3" aria-label="Quote progress">
           <div class="quote-progress__bar">
-            <div class="quote-progress__fill" id="progress-fill" style="width: 20%;"></div>
+            <div class="quote-progress__fill" id="progress-fill" style="width: 33.3%;"></div>
           </div>
           <div class="quote-progress__steps">
             <span class="quote-progress__step is-active" data-step="1">1</span>
             <span class="quote-progress__step" data-step="2">2</span>
             <span class="quote-progress__step" data-step="3">3</span>
-            <span class="quote-progress__step" data-step="4">4</span>
-            <span class="quote-progress__step" data-step="5">5</span>
           </div>
         </div>
 
         <!-- Calculator Form -->
         <div class="quote-calculator" id="quote-calculator">
 
-          <!-- Step 1: Address -->
+          <!-- Step 1: Address + Satellite Map + Pitch -->
           <div class="quote-step is-active" id="step-1" data-step="1">
             <div class="quote-step__header">
               <h2 id="quote-heading">Where is your property located?</h2>
               <p>We serve Austin and all of Central Texas.</p>
             </div>
             <div class="quote-step__body">
-              <div class="form-group">
+              <div class="form-group" style="position: relative;">
                 <label class="form-label" for="address">Property Address</label>
                 <input type="text" id="address" class="form-input" placeholder="Start typing your address..." autocomplete="off" required>
+                <div id="geocode-results" class="geocode-dropdown" style="display:none;"></div>
+              </div>
+
+              <!-- Satellite map container -->
+              <div id="quote-map-wrap" style="display:none; margin-top: var(--space-lg);">
+                <div id="quote-map" style="width:100%; height:360px; border-radius:var(--radius-lg); overflow:hidden;"></div>
+                <div id="footprint-status" style="margin-top: var(--space-sm);"></div>
+              </div>
+
+              <!-- Roof pitch selector (shown after address selected) -->
+              <div id="pitch-section" style="display:none; margin-top: var(--space-xl);">
+                <label class="form-label">Roof Pitch</label>
+                <div class="quote-options quote-options--pitch" id="pitch-options">
+                  <button type="button" class="quote-option" data-value="0.55">
+                    <span class="quote-option__icon">
+                      <svg viewBox="0 0 80 40" width="80" height="40" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="5" y1="35" x2="75" y2="35"/>
+                        <polyline points="5,32 40,28 75,32"/>
+                      </svg>
+                    </span>
+                    <span class="quote-option__label">Flat</span>
+                  </button>
+                  <button type="button" class="quote-option" data-value="0.65">
+                    <span class="quote-option__icon">
+                      <svg viewBox="0 0 80 40" width="80" height="40" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="5" y1="35" x2="75" y2="35"/>
+                        <polyline points="5,32 40,20 75,32"/>
+                      </svg>
+                    </span>
+                    <span class="quote-option__label">Low</span>
+                  </button>
+                  <button type="button" class="quote-option is-selected" data-value="0.75">
+                    <span class="quote-option__icon">
+                      <svg viewBox="0 0 80 40" width="80" height="40" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="5" y1="35" x2="75" y2="35"/>
+                        <polyline points="5,32 40,10 75,32"/>
+                      </svg>
+                    </span>
+                    <span class="quote-option__label">Standard</span>
+                  </button>
+                  <button type="button" class="quote-option" data-value="0.90">
+                    <span class="quote-option__icon">
+                      <svg viewBox="0 0 80 40" width="80" height="40" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="5" y1="35" x2="75" y2="35"/>
+                        <polyline points="5,32 40,3 75,32"/>
+                      </svg>
+                    </span>
+                    <span class="quote-option__label">Steep</span>
+                  </button>
+                </div>
               </div>
             </div>
             <div class="quote-step__actions">
@@ -150,11 +201,11 @@
             </div>
           </div>
 
-          <!-- Step 2: Home Size -->
-          <div class="quote-step" id="step-2" data-step="2">
+          <!-- Fallback Step: Manual Home Size (hidden by default, shown only if footprint not detected) -->
+          <div class="quote-step" id="step-manual-size" data-step="manual-size" style="display:none;">
             <div class="quote-step__header">
               <h2>What is your home's approximate square footage?</h2>
-              <p>Don't worry about being exact — an estimate is fine.</p>
+              <p>We couldn't auto-detect your building footprint. Please select your home size below.</p>
             </div>
             <div class="quote-step__body">
               <div class="quote-options" id="size-options">
@@ -204,78 +255,12 @@
             </div>
             <div class="quote-step__actions">
               <button type="button" class="btn btn--secondary quote-prev" data-prev="1">Back</button>
-              <button type="button" class="btn btn--primary btn--lg quote-next" data-next="3" disabled>Next Step</button>
+              <button type="button" class="btn btn--primary btn--lg quote-next" data-next="2" disabled>Next Step</button>
             </div>
           </div>
 
-          <!-- Step 3: Roof Details -->
-          <div class="quote-step" id="step-3" data-step="3">
-            <div class="quote-step__header">
-              <h2>Tell us about your roof</h2>
-              <p>Select your roof pitch and the number of stories.</p>
-            </div>
-            <div class="quote-step__body">
-              <label class="form-label">Roof Pitch</label>
-              <div class="quote-options quote-options--pitch" id="pitch-options">
-                <button type="button" class="quote-option" data-value="0.55">
-                  <span class="quote-option__icon">
-                    <svg viewBox="0 0 80 40" width="80" height="40" fill="none" stroke="currentColor" stroke-width="2">
-                      <line x1="5" y1="35" x2="75" y2="35"/>
-                      <polyline points="5,32 40,28 75,32"/>
-                    </svg>
-                  </span>
-                  <span class="quote-option__label">Flat</span>
-                </button>
-                <button type="button" class="quote-option" data-value="0.65">
-                  <span class="quote-option__icon">
-                    <svg viewBox="0 0 80 40" width="80" height="40" fill="none" stroke="currentColor" stroke-width="2">
-                      <line x1="5" y1="35" x2="75" y2="35"/>
-                      <polyline points="5,32 40,20 75,32"/>
-                    </svg>
-                  </span>
-                  <span class="quote-option__label">Low</span>
-                </button>
-                <button type="button" class="quote-option is-selected" data-value="0.75">
-                  <span class="quote-option__icon">
-                    <svg viewBox="0 0 80 40" width="80" height="40" fill="none" stroke="currentColor" stroke-width="2">
-                      <line x1="5" y1="35" x2="75" y2="35"/>
-                      <polyline points="5,32 40,10 75,32"/>
-                    </svg>
-                  </span>
-                  <span class="quote-option__label">Standard</span>
-                </button>
-                <button type="button" class="quote-option" data-value="0.90">
-                  <span class="quote-option__icon">
-                    <svg viewBox="0 0 80 40" width="80" height="40" fill="none" stroke="currentColor" stroke-width="2">
-                      <line x1="5" y1="35" x2="75" y2="35"/>
-                      <polyline points="5,32 40,3 75,32"/>
-                    </svg>
-                  </span>
-                  <span class="quote-option__label">Steep</span>
-                </button>
-              </div>
-
-              <label class="form-label" style="margin-top: var(--space-xl);">Number of Stories</label>
-              <div class="quote-options quote-options--stories" id="stories-options">
-                <button type="button" class="quote-option is-selected" data-value="1">
-                  <span class="quote-option__label">1 Story</span>
-                </button>
-                <button type="button" class="quote-option" data-value="2">
-                  <span class="quote-option__label">2 Stories</span>
-                </button>
-                <button type="button" class="quote-option" data-value="3">
-                  <span class="quote-option__label">3 Stories</span>
-                </button>
-              </div>
-            </div>
-            <div class="quote-step__actions">
-              <button type="button" class="btn btn--secondary quote-prev" data-prev="2">Back</button>
-              <button type="button" class="btn btn--primary btn--lg quote-next" data-next="4">Next Step</button>
-            </div>
-          </div>
-
-          <!-- Step 4: Service & Material -->
-          <div class="quote-step" id="step-4" data-step="4">
+          <!-- Step 2: Service & Material -->
+          <div class="quote-step" id="step-2" data-step="2">
             <div class="quote-step__header">
               <h2>What do you need?</h2>
               <p>Select the service type and your preferred roofing material.</p>
@@ -327,20 +312,24 @@
               </div>
             </div>
             <div class="quote-step__actions">
-              <button type="button" class="btn btn--secondary quote-prev" data-prev="3">Back</button>
-              <button type="button" class="btn btn--primary btn--lg quote-next" data-next="5" disabled>See My Quote</button>
+              <button type="button" class="btn btn--secondary quote-prev" data-prev="1">Back</button>
+              <button type="button" class="btn btn--primary btn--lg quote-next" data-next="3" disabled>See My Quote</button>
             </div>
           </div>
 
-          <!-- Step 5: Results -->
-          <div class="quote-step" id="step-5" data-step="5">
+          <!-- Step 3: Results + Lead Capture -->
+          <div class="quote-step" id="step-3" data-step="3">
             <div class="quote-step__header">
               <h2>Your Estimated Roof Cost</h2>
-              <p>Based on the details you provided, here is your estimated price range for your Austin home.</p>
+              <p>Based on satellite imagery and the details you provided, here is your estimated price range.</p>
             </div>
             <div class="quote-step__body">
 
+              <!-- Satellite thumbnail + results side by side -->
               <div class="quote-result" id="quote-result">
+                <div id="result-map-thumb" style="display:none; margin-bottom: var(--space-lg);">
+                  <div id="quote-map-static" style="width:100%; height:200px; border-radius:var(--radius-lg); overflow:hidden;"></div>
+                </div>
                 <div class="quote-result__range">
                   <span class="quote-result__low" id="result-low">$0</span>
                   <span class="quote-result__separator">–</span>
@@ -372,7 +361,7 @@
               </div>
             </div>
             <div class="quote-step__actions">
-              <button type="button" class="btn btn--secondary quote-prev" data-prev="4">Back</button>
+              <button type="button" class="btn btn--secondary quote-prev" data-prev="2">Back</button>
               <a href="tel:+15125550123" class="btn btn--teal btn--lg">Call (512) 555-0123</a>
             </div>
           </div>
@@ -382,7 +371,7 @@
     </section>
 
     <!-- TRUST SECTION -->
-    <section class="section section--cream" aria-label="Why choose Creekstone">
+    <section class="section section--cream" aria-label="Why choose Waterloo">
       <div class="container">
         <div class="grid grid--3">
           <div class="text-center" style="padding: var(--space-xl);">
@@ -408,8 +397,8 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <img src="/remixed-79905f81.svg" alt="Creekstone Roof Co" width="160" height="80" loading="lazy" style="margin-bottom: var(--space-lg);">
-          <p>Creekstone Roof Co is a licensed and insured roofing contractor serving Austin, TX and Central Texas. We specialize in roof replacement, repair, storm damage restoration, and commercial roofing.</p>
+          <img src="/remixed-79905f81.svg" alt="Waterloo Roofing Co" width="160" height="80" loading="lazy" style="margin-bottom: var(--space-lg);">
+          <p>Waterloo Roofing Co is a licensed and insured roofing contractor serving Austin, TX and Central Texas. We specialize in roof replacement, repair, storm damage restoration, and commercial roofing.</p>
         </div>
 
         <div>
@@ -446,7 +435,7 @@
             </div>
             <div class="footer-contact-item">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-              <a href="mailto:info@creekstoneroofco.com">info@creekstoneroofco.com</a>
+              <a href="mailto:info@waterlooroofingco.com">info@waterlooroofingco.com</a>
             </div>
             <div class="footer-contact-item">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
@@ -461,7 +450,7 @@
       </div>
 
       <div class="footer-bottom">
-        <p>&copy; <span id="year">2026</span> Creekstone Roof Co. All rights reserved. Licensed &amp; insured roofing contractor in Austin, TX.</p>
+        <p>&copy; <span id="year">2026</span> Waterloo Roofing Co. All rights reserved. Licensed &amp; insured roofing contractor in Austin, TX.</p>
         <div>
           <a href="/privacy/">Privacy Policy</a> &middot;
           <a href="/terms/">Terms of Service</a> &middot;
@@ -472,6 +461,7 @@
   </footer>
 
   <script defer src="/js/main.js"></script>
+  <script src="/js/config.js"></script>
   <script defer src="/js/quote-calculator.js"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-/* Creekstone Roof Co — Main JavaScript
+/* Waterloo Roofing Co — Main JavaScript
    Minimal, performance-focused, no dependencies */
 
 (function () {

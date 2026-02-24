@@ -14,9 +14,9 @@
     <circle cx="0" cy="0" r="165" fill="url(#lbg1)"/>
 
     <!-- Top arc -->
-    <path id="lt1" d="M -118,-28 A 135,135 0 0,1 118,-28" fill="none"/>
-    <text font-family="Georgia, 'Palatino Linotype', serif" font-size="27" fill="#F0EBE3" letter-spacing="7" font-weight="bold">
-      <textPath href="#lt1" startOffset="50%" text-anchor="middle">CREEKSTONE</textPath>
+    <path id="lt1" d="M -120,-25 A 145,145 0 0,1 120,-25" fill="none"/>
+    <text font-family="Georgia, 'Palatino Linotype', serif" font-size="29" fill="#F0EBE3" letter-spacing="8" font-weight="bold">
+      <textPath href="#lt1" startOffset="50%" text-anchor="middle">WATERLOO</textPath>
     </text>
 
     <!-- Bottom arc -->
