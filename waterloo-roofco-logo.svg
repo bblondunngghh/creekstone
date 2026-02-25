@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=Rajdhani:wght@600&amp;display=swap');
+    </style>
+  </defs>
+
+  <!-- Outer circle border -->
+  <circle cx="200" cy="200" r="188" fill="#f5f5f5" stroke="#e8e8e8" stroke-width="4"/>
+
+  <!-- Inner circle border -->
+  <circle cx="200" cy="200" r="176" fill="none" stroke="#cccccc" stroke-width="1.5"/>
+
+  <!-- WATERLOO text -->
+  <text x="200" y="172" text-anchor="middle" font-family="'Archivo Black', sans-serif" font-size="42" fill="#1a1a1a" letter-spacing="2" font-weight="900">WATERLOO</text>
+
+  <!-- ROOFCO text -->
+  <text x="200" y="222" text-anchor="middle" font-family="'Archivo Black', sans-serif" font-size="52" fill="#1a1a1a" letter-spacing="4" font-weight="900">ROOFCO</text>
+
+  <!-- Red divider line -->
+  <rect x="170" y="238" width="60" height="2" fill="#c41e1e"/>
+
+  <!-- Tagline -->
+  <text x="200" y="264" text-anchor="middle" font-family="'Rajdhani', sans-serif" font-size="13" fill="#c41e1e" letter-spacing="8" font-weight="600">ROOFS THAT LAST</text>
+
+</svg>
