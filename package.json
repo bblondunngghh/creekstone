@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Waterloo Roofing Co — Austin, TX roofing company website",
   "scripts": {
+    "build": "bash build.sh",
     "start": "npx serve . -l $PORT"
   }
 }
