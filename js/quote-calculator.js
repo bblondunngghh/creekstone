@@ -536,6 +536,17 @@
       }
 
       var leadForm = document.querySelector('.quote-lead');
+      fetch('https://formspree.io/f/xkovyynj', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          name: name,
+          phone: phone,
+          email: email,
+          address: state.address,
+          source: 'quote-calculator'
+        })
+      });
       leadForm.innerHTML = '<div class="quote-lead__success">' +
         '<svg viewBox="0 0 24 24" width="48" height="48" fill="var(--color-teal)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>' +
         '<h3>Thank You, ' + name.split(' ')[0] + '!</h3>' +
