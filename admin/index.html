@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login | Waterloo Roofing Co</title>
+  <meta name="robots" content="noindex, nofollow">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <style>
+    .admin-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-stone);
+      padding: var(--space-xl);
+    }
+    .admin-card {
+      background: var(--color-white);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--shadow-lg);
+      padding: var(--space-2xl);
+      width: 100%;
+      max-width: 420px;
+    }
+    .admin-card__logo {
+      display: block;
+      margin: 0 auto var(--space-xl);
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+    }
+    .admin-card__title {
+      font-family: var(--font-heading);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--color-primary);
+      text-align: center;
+      margin-bottom: var(--space-xs);
+    }
+    .admin-card__subtitle {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+    .admin-error {
+      background: oklch(0.95 0.05 25);
+      color: oklch(0.45 0.15 25);
+      border-radius: var(--border-radius);
+      padding: var(--space-sm) var(--space-md);
+      font-size: var(--text-sm);
+      margin-bottom: var(--space-lg);
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-wrapper">
+    <div class="admin-card">
+      <img src="/waterloo-roofco-logo.svg" alt="Waterloo RoofCo" class="admin-card__logo">
+      <div class="admin-card__title">Admin Portal</div>
+      <p class="admin-card__subtitle">Sign in to access your dashboard.</p>
+
+      <div class="admin-error" id="error-msg">Invalid email or password. Please try again.</div>
+
+      <form id="admin-form" onsubmit="return false;">
+        <div class="form-group">
+          <label for="admin-email" class="form-label">Email</label>
+          <input type="email" id="admin-email" class="form-input" required autocomplete="email" autofocus>
+        </div>
+        <div class="form-group">
+          <label for="admin-password" class="form-label">Password</label>
+          <input type="password" id="admin-password" class="form-input" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn--primary btn--lg" style="width: 100%; margin-top: var(--space-lg);">Sign In</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    async function hashValue(str) {
+      var buf = new TextEncoder().encode(str);
+      var digest = await crypto.subtle.digest('SHA-256', buf);
+      return Array.from(new Uint8Array(digest)).map(function (b) { return b.toString(16).padStart(2, '0'); }).join('');
+    }
+
+    document.getElementById('admin-form').addEventListener('submit', async function () {
+      var email = document.getElementById('admin-email').value.trim().toLowerCase();
+      var password = document.getElementById('admin-password').value;
+      var error = document.getElementById('error-msg');
+
+      var emailHash = await hashValue(email);
+      var passHash = await hashValue(password);
+
+      if (emailHash === '19eac631e05f0cd5a36e63f4c6e8db0b7f83aaa00cb892a08a8864624a002967' &&
+          passHash === '358b218d6c2ac68d8988c11ca7def37404f079ecfa21703ac487740b7be4202f') {
+        error.style.display = 'none';
+        window.location.href = 'https://stormleader-production.up.railway.app/';
+      } else {
+        error.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>

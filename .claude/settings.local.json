@@ -58,7 +58,8 @@
       "Bash(find C:\\\\Projects\\\\stormleads\\\\server\\\\src\\\\db\\\\migrations:*)",
       "Bash(grep:*)",
       "WebFetch(domain:feature.tnris.org)",
-      "Bash(head:*)"
+      "Bash(head:*)",
+      "Bash(true:*)"
     ]
   }
 }
